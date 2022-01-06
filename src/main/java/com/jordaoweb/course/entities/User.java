@@ -1,6 +1,7 @@
 package com.jordaoweb.course.entities;
 import java.util.ArrayList;
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
