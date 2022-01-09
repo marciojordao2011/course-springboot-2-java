@@ -3,10 +3,12 @@ package com.jordaoweb.course.services;
 import java.util.List;
 import java.util.Optional;
 import com.jordaoweb.course.services.exceptions.ResourceNotFoundException;
+import com.jordaoweb.course.services.exceptions.DatabaseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import com.jordaoweb.course.entities.User;
 import com.jordaoweb.course.repositories.UserRepository;
 
@@ -30,7 +32,13 @@ public class UserService {
 	}
 	
 	public void delete(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 	
 	public User update(Long id, User obj) {
