@@ -2,6 +2,7 @@ package com.jordaoweb.course.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ public class Payment implements Serializable {
 	private Long id;
 	private Instant moment;
 
+	@JsonIgnore
 	@OneToOne
 	@MapsId
 	private Order order;
